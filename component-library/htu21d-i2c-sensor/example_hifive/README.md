@@ -14,4 +14,4 @@ JLinkGDBServer -device FE310 -if JTAG -speed 4000 -port 3333 -nogui
 ```
 
  - Use `cargo build` and `cargo run` to build the project and to send it to the device (assuming it is connected and you have the J-Link software installed and started as in the command above).
- - After you exit your program (`Ctrl+C`), you end up in `(gdb)` console. Press `Ctrl+D` to exit this console.
+ - If you end up in `(gdb)` console, press `Ctrl+D` to exit, this will also terminate the code on your device.
