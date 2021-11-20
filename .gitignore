@@ -1,0 +1,5 @@
+# MacOS temporary junk files
+.DS_Store
+
+# Backup blender files
+*.blend1
