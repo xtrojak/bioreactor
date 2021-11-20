@@ -1,6 +1,8 @@
 # GA12-N20 motor
 
-This high torque metal gear mini DC motor is perfect for hobbyists and students who want to build robotic projects such as two and four wheel drive platforms as well as any rotating mechanical device. Benefiting from its high torque, compact size and weight, these DC motors provide an excellent and reliable motion source for the inventor. 
+A small DC motor with an included metal gearbox. There are 3/6/12V variants, plus the gearbox can be selected for different torque/speed. The piece we are using is a 12V variant with \~150RPM speed (\~1kg/cm torque).
+
+There are two M1.6 threaded screw holes that can be used to secure the motor in place.
 
 Specifications
 
