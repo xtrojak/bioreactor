@@ -1,0 +1,88 @@
+(module RGBW_LED_GW_J9LHS1.4M (layer F.Cu) (tedit 61A54BCA)
+  (tags LED)
+  (fp_text reference REF** (at 0 4) (layer F.SilkS)
+    (effects (font (size 1 1) (thickness 0.153)))
+  )
+  (fp_text value GW-J9LHS1.4M_LED (at 0 -4) (layer F.Fab)
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (fp_line (start -3.2 3.1) (end -2.5 3.1) (layer F.SilkS) (width 0.153))
+  (fp_line (start -3.2 2.4) (end -3.2 3.1) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.6 -2.5) (end 2.6 2.5) (layer F.CrtYd) (width 0.1))
+  (fp_line (start 2.6 -2.5) (end -2.6 -2.5) (layer F.CrtYd) (width 0.1))
+  (fp_line (start -2.6 -2.5) (end -2.6 2.5) (layer F.CrtYd) (width 0.1))
+  (fp_line (start -2.6 2.5) (end 2.6 2.5) (layer F.CrtYd) (width 0.1))
+  (fp_line (start -2.9 2.4) (end -2.9 2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start -2.9 2.8) (end -2.5 2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start -0.3 2.8) (end 0.3 2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.9 2.4) (end 2.9 2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.9 2.8) (end 2.5 2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.9 -2.4) (end 2.9 -2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.9 -2.8) (end 2.5 -2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start 0.3 -2.8) (end -0.3 -2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start -2.9 -2.4) (end -2.9 -2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start -2.9 -2.8) (end -2.5 -2.8) (layer F.SilkS) (width 0.153))
+  (fp_line (start -3 0.3) (end -3 -0.3) (layer F.SilkS) (width 0.153))
+  (fp_line (start 2.9 0.3) (end 2.9 -0.3) (layer F.SilkS) (width 0.153))
+  (pad 1 smd custom (at -2.21 -1.81) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 2.88 0.72) (xy 2.88 -0.39) (xy -0.44 -0.39) (xy -0.44 0.39) (xy 0.58 0.72)
+) (width 0))
+    ))
+  (pad 4 smd custom (at -2.21 1.81) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 2.88 -0.72) (xy 2.88 0.39) (xy -0.44 0.39) (xy -0.44 -0.39) (xy 0.58 -0.72)
+) (width 0))
+    ))
+  (pad 2 smd custom (at -2.21 -0.48) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 1.31 -0.31) (xy 0.41 -0.31) (xy -0.44 -0.52) (xy -0.44 0.33) (xy 1.31 0.33)
+) (width 0))
+    ))
+  (pad 3 smd custom (at -2.21 0.48) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 1.31 0.31) (xy 0.41 0.31) (xy -0.44 0.52) (xy -0.44 -0.33) (xy 1.31 -0.33)
+) (width 0))
+    ))
+  (pad 8 smd custom (at 2.21 -1.75) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 0.44 0.45) (xy -1.24 0.45) (xy -1.24 -0.45) (xy 0.44 -0.45)) (width 0))
+    ))
+  (pad 7 smd custom (at 2.21 -0.56) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 0.44 -0.44) (xy -1.24 -0.44) (xy -1.24 -0.31) (xy -2.81 -0.31) (xy -2.81 0.43)
+         (xy 0.44 0.43)) (width 0))
+    ))
+  (pad 6 smd custom (at 2.21 0.56) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 0.44 0.44) (xy -1.24 0.44) (xy -1.24 0.31) (xy -2.81 0.31) (xy -2.81 -0.43)
+         (xy 0.44 -0.43)) (width 0))
+    ))
+  (pad 5 smd custom (at 2.21 1.75) (size 0.5 0.5) (layers F.Cu F.Paste F.Mask)
+    (zone_connect 0)
+    (options (clearance outline) (anchor rect))
+    (primitives
+      (gr_poly (pts
+         (xy 0.44 0.45) (xy -1.24 0.45) (xy -1.24 -0.45) (xy 0.44 -0.45)) (width 0))
+    ))
+)
