@@ -1,0 +1,6 @@
+{
+  "name": "Test Hub",
+  "description": "A Rust-based bioreactor hub.",
+  "server_password": "some very long password",
+  "user_password": ["let me in", "another password"]
+}

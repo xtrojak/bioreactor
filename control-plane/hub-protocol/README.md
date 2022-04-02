@@ -1,4 +1,4 @@
-# Frontend Protocol
+# Hub Protocol
 
 In this part of the repository, we describe the internal REST protocol for communication between bioreactor *hub* and other more high-level devices.
 
@@ -6,7 +6,7 @@ In this part of the repository, we describe the internal REST protocol for commu
 
 Bioreactor control plane consists of three main layers: low-level *driver*, intermediary *hub*, and a high-level *control panel*. These may be fully separate, or may be integrated into a single device, depending on the actual architecture. The main purpose of this distinction is to provide a clear separation of concerns.
 
-The *frontend protocol* describes the API provided by the *hub* that is used by the *control panel* or other high-level automation and data collection tools. Architecturally, the frontend protocol should allow anyone to connect to a *hub* over a public network, observe the state of the connected bioreactors and make changes to their instruments.
+The *hub protocol* describes the API provided by the *hub* that is used by the *control panel* or other high-level automation and data collection tools. Architecturally, the frontend protocol should allow anyone to connect to a *hub* over a public network, observe the state of the connected bioreactors and make changes to their instruments.
 
 ## Security
 
@@ -15,7 +15,7 @@ The initial design assumes that there is a single *master password* (or a collec
 However, there are several security measures that we nevertheless enforce:
 
  1. A user must authenticate through a `/login` API endpoint. After successful authentication, the user receives a time-limited token that is used for any further communication with the API instead of the master password---the master password must not be saved on the user's device.
- 2. If a user wants to remain "logged in" indefinitely, the token is still time-limited. The client can however exchange the token for a new one (with a renewed expiration date) at any moment. This effectively leads to a system where, as long as the user is repeatedly using the API, the token is renewed periodically. An automatic logout occurs after a certain period of inactivity when the token is not renewed (e.g. a month).
+ 2. If a user wants to remain "logged in" indefinitely, the token is still time-limited. The client can however exchange the token for a new one using `/renew` (with a renewed expiration date) at any moment. This effectively leads to a system where, as long as the user is repeatedly using the API, the token is renewed periodically. An automatic logout occurs after a certain period of inactivity when the token is not renewed (e.g. a month).
  3. The token design should allow a token to survive situations like a hub restart or a migration (i.e. tokens are not *stored* by the hub, they are verified cryptographically). However, a hub reserves the right to revoke its tokens at any time, at which point a new login must be performed.
  4. Finally, when running a hub on a public network, **always use HTTPS** to avoid leaking the master password.
 
@@ -27,7 +27,7 @@ Here, we outline the recommended principles for token generation. The low-level 
 
 As part of its configuration, a hub receives one or more *user passwords* (e.g. `apple`) and a single *server password* (e.g. `snake`). Of course, all typical recommendations for selecting secure passwords apply. 
 
-**Token generation:** When requesting a token, user attaches one of the user passwords (e.g. `apple`) to the request. If the user password is correct, the hub takes the timestamp until which the token is valid (e.g. `123456789`), concatenates it with the server password (e.g. `123456789;snake`) and produces a hash of this string (e.g. `4af40cb89`). Subsequently, this hash is again concatenated with the timestamp (e.g. `123456789;4af40cb89`). This is the returned token. It is either provided as is, or in some standard encoding (e.g. `base64`). The expiration timestamp should be explicitly provided along with the token. 
+**Token generation:** When requesting a token, user attaches one of the user passwords (e.g. `apple`) to the request. If the user password is correct, the hub takes the timestamp until which the token is valid (e.g. `123456789`), concatenates it with the server password (e.g. `123456789;snake`) and produces a hash of this string (e.g. `4af40cb89`). Subsequently, this hash is again concatenated with the timestamp (e.g. `123456789;4af40cb89`). This is the returned token. It is either provided as is, or in some standard encoding (e.g. `base64`). The expiration timestamp should be also explicitly provided along with the token. 
 
 The advantage of additional token encoding is that it can potentially detect or repair small errors during transmission. But most communication channels already do this on a lower-level, so at this point it is mostly an obfuscation step. Furthermore, the hub is free to attach any additional metadata aside from timestamp to the token. This can be later used to implement, for example, permissions or user accounts.
 
