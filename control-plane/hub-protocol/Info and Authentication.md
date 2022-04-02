@@ -19,9 +19,9 @@ This endpoint (probably the only one) does not require authentication. It output
 }
 ```
 
-Probably the most critical value here is the `version`. The protocol will surely evolve, and even though most changes should be non-breaking (like adding new instruments or enhacing existing ones), the clients should be able to check that the server is online and is runnign a supported version of the protocol.
+Probably the most critical value here is the `version`. The protocol will surely evolve, and even though most changes should be non-breaking (like adding new instruments or enhacing existing ones), the clients should be able to check that the server is online and is running a supported version of the protocol.
 
-Less importantly, `name` and `description` can be shown in the user interface to esily identify the server (as opposed to its IP) if the user is connected to multiple servers.
+Less importantly, `name` and `description` can be shown in the user interface to easily identify the server (as opposed to its IP) if the user is connected to multiple servers.
 
 In the future, this will probably include additional information (e.g. distinguish server version and protocol version).
 
@@ -40,7 +40,7 @@ Response:
 ```json
 {
 	"token": "AUTHENTICATION_TOKEN",
-	"expires": "ISO_8601_UCT_TIMESTAMP"
+	"expires": "ISO_8601_UTC_TIMESTAMP"
 }
 ```
 
@@ -48,4 +48,11 @@ The obtained token can be used directly as the value of the `Authorization` head
 
 ## \[GET\] `/renew`
 
-Has no input except for the `Authorization` header, which proves that the user is authenticated. The response is the same JSON object as for `/login`, but a new token with updated expiration time is returned for each request.
+The endpoint has no input except for the `Authorization` header, which proves that the user is authenticated. The response is the same JSON object as for `/login`, but a new token with updated expiration time is returned for each request:
+
+```json
+{
+	"token": "AUTHENTICATION_TOKEN",
+	"expires": "ISO_8601_UTC_TIMESTAMP"
+}
+```
