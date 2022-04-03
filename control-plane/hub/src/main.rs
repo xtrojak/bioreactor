@@ -10,7 +10,7 @@ use std::process::exit;
 /// Module where all authentication code resides. In particular, it defines `/login` and `/renew`
 /// endpoints. It also provides `ApiToken` request guard that can be used to enforce authentication
 /// on other endpoints.
-mod auth;
+mod api_auth;
 
 /// Describes configuration of the hub server, including deserialization from a JSON file.
 mod config;
@@ -39,7 +39,7 @@ async fn main() -> Result<(), rocket::Error> {
     // Mount "server info" root endpoint.
     rocket = rocket.mount("/", routes![index]);
     // Mount authentication related endpoints.
-    rocket = auth::register(rocket);
+    rocket = api_auth::register(rocket);
     // Start server.
     rocket.launch().await
 }
