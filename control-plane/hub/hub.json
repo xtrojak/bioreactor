@@ -2,5 +2,19 @@
   "name": "Test Hub",
   "description": "A Rust-based bioreactor hub.",
   "server_password": "some very long password",
-  "user_password": ["let me in", "another password"]
+  "user_password": ["let me in", "another password"],
+  "device_config": [
+    {
+      "type": "test_device",
+      "id": "test-device-1",
+      "name": "Bioreactor (1)",
+      "description": "Virtual bioreactor for testing."
+    },
+    {
+      "type": "test_device",
+      "id": "test-device-2",
+      "name": "Bioreactor (2)",
+      "description": "Second virtual bioreactor for testing."
+    }
+  ]
 }

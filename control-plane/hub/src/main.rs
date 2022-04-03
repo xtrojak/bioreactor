@@ -2,6 +2,8 @@
 extern crate rocket;
 
 use crate::config::HubConfig;
+use crate::device::{BioreactorDevice, DeviceDepot};
+use crate::test_bioreactor::TestReactor;
 use rocket::serde::json::Json;
 use rocket::State;
 use serde::Serialize;
@@ -12,8 +14,21 @@ use std::process::exit;
 /// on other endpoints.
 mod api_auth;
 
+/// Module where device-related endpoints are defined. In particular, device list (`[GET] /hub`)
+/// device info (`[GET] /hub/<device-id>`), and device update (`[POST] /hub/<device-id>`).
+mod api_device;
+
 /// Describes configuration of the hub server, including deserialization from a JSON file.
 mod config;
+
+/// Code related to management of individual bioreactor devices. In particular, it defines
+/// the `Bioreactor` trait that needs to be implemented by structures that manage access to
+/// a bioreactor device. It also defines `DeviceDepot` which is a thread-safe collection for
+/// accessing `Bioreactors` as part of the server state.
+mod device;
+
+/// Defines a "virtual" bioreactor device that can be used for testing.
+mod test_bioreactor;
 
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
@@ -33,13 +48,27 @@ async fn main() -> Result<(), rocket::Error> {
         exit(1);
     }
 
+    let mut devices: Vec<BioreactorDevice> = Vec::new();
+
+    for device in config.device_config.clone() {
+        if device.is_test_device() {
+            devices.push(Box::new(TestReactor::from_config(
+                device.to_test_device().unwrap(),
+            )));
+        }
+    }
+
+    let device_depot = DeviceDepot::new(devices);
+
     let mut rocket = rocket::build();
-    // Add configuration data.
+    // Add configuration data and other state.
     rocket = rocket.manage(config);
+    rocket = rocket.manage(device_depot);
     // Mount "server info" root endpoint.
     rocket = rocket.mount("/", routes![index]);
-    // Mount authentication related endpoints.
+    // Mount other endpoints.
     rocket = api_auth::register(rocket);
+    rocket = api_device::register(rocket);
     // Start server.
     rocket.launch().await
 }

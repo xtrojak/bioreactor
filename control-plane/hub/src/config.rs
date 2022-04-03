@@ -1,3 +1,4 @@
+use crate::test_bioreactor::TestReactorConfig;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 
@@ -17,6 +18,20 @@ pub struct HubConfig {
     pub description: Option<String>,
     pub server_password: String,
     pub user_password: Vec<String>,
+    pub device_config: Vec<DeviceConfig>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum DeviceConfig {
+    TestDevice {
+        id: String,
+        name: String,
+        description: Option<String>,
+    },
+    NetworkDevice {
+        // TODO: Add some fancy config options :)
+    },
 }
 
 impl HubConfig {
@@ -56,5 +71,31 @@ impl HubConfig {
             return Err("Server password must be at least 16 characters long.".to_string());
         }
         Ok(())
+    }
+}
+
+impl DeviceConfig {
+    /// Check if this device config corresponds to a test device config.
+    pub fn is_test_device(&self) -> bool {
+        match self {
+            DeviceConfig::TestDevice { .. } => true,
+            _ => false,
+        }
+    }
+
+    /// Convert this device config into a test device config.
+    pub fn to_test_device(self) -> Option<TestReactorConfig> {
+        match self {
+            DeviceConfig::TestDevice {
+                id,
+                name,
+                description,
+            } => Some(TestReactorConfig {
+                id,
+                name,
+                description,
+            }),
+            _ => None,
+        }
     }
 }
