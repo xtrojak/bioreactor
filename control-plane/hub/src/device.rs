@@ -30,7 +30,7 @@ pub enum DeviceStatus {
 /// Since the objects will be typically used in async/multi-threaded environment, we mostly
 /// assume that results of individual operations are copied instead of borrowed. This makes
 /// it slightly easier to implement the trait as one does not need to be concerned with
-/// ownership.
+/// ownership. For now, the performance impact should be negligible.
 pub trait Bioreactor {
     /// Get a unique device ID (usually assigned in configuration).
     fn get_id(&self) -> String;
@@ -43,6 +43,12 @@ pub trait Bioreactor {
 
     /// Get current device status.
     fn get_current_status(&self) -> DeviceStatus;
+
+    /// Get a human-readable string describing the current status. This can be
+    /// used alongside `get_current_status` to provide a more detailed description
+    /// of the current situation (e.g. indicate errors). However, the messages
+    /// are not standardized (it is valid to always return `None`).
+    fn get_current_status_extra(&self) -> Option<String>;
 
     /// Get a device status that is currently being targeted.
     fn get_target_status(&self) -> DeviceStatus;

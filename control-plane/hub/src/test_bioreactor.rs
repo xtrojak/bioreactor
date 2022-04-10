@@ -1,27 +1,22 @@
+use crate::config::DeviceMetadata;
 use crate::device::{Bioreactor, DeviceStatus};
 
 /// A dummy "virtual" bioreactor device that can be used for testing.
 pub struct TestReactor {
-    id: String,
-    name: String,
-    description: Option<String>,
+    metadata: DeviceMetadata,
     status: DeviceStatus,
 }
 
 #[derive(Clone, Debug)]
 pub struct TestReactorConfig {
-    pub id: String,
-    pub name: String,
-    pub description: Option<String>,
+    pub meta: DeviceMetadata,
 }
 
 impl TestReactor {
     /// Create a `TestReactor` from a `TestReactorConfig` instance.
     pub fn from_config(config: TestReactorConfig) -> TestReactor {
         TestReactor {
-            id: config.id,
-            name: config.name,
-            description: config.description,
+            metadata: config.meta,
             status: DeviceStatus::Inactive,
         }
     }
@@ -29,19 +24,23 @@ impl TestReactor {
 
 impl Bioreactor for TestReactor {
     fn get_id(&self) -> String {
-        self.id.clone()
+        self.metadata.id.clone()
     }
 
     fn get_name(&self) -> String {
-        self.name.clone()
+        self.metadata.name.clone()
     }
 
     fn get_description(&self) -> Option<String> {
-        self.description.clone()
+        self.metadata.description.clone()
     }
 
     fn get_current_status(&self) -> DeviceStatus {
         self.status
+    }
+
+    fn get_current_status_extra(&self) -> Option<String> {
+        None
     }
 
     fn get_target_status(&self) -> DeviceStatus {

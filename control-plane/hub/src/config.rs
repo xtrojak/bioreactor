@@ -1,5 +1,7 @@
+use crate::network_bioreactor::NetworkReactorConfig;
 use crate::test_bioreactor::TestReactorConfig;
 use serde::{Deserialize, Serialize};
+use std::net::Ipv4Addr;
 use std::path::Path;
 
 /// Hub server configuration data.
@@ -21,16 +23,25 @@ pub struct HubConfig {
     pub device_config: Vec<DeviceConfig>,
 }
 
+/// Metadata configuration that is generally shared across all types of bioreactor
+/// devices and is provided as part of the global configuration.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DeviceMetadata {
+    pub id: String,
+    pub name: String,
+    pub description: Option<String>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum DeviceConfig {
     TestDevice {
-        id: String,
-        name: String,
-        description: Option<String>,
+        meta: DeviceMetadata,
     },
     NetworkDevice {
-        // TODO: Add some fancy config options :)
+        meta: DeviceMetadata,
+        address: Option<Ipv4Addr>,
+        port: u16,
     },
 }
 
@@ -75,25 +86,24 @@ impl HubConfig {
 }
 
 impl DeviceConfig {
-    /// Check if this device config corresponds to a test device config.
-    pub fn is_test_device(&self) -> bool {
+    /// Convert this device config into a test device config.
+    pub fn to_test_device(&self) -> Option<TestReactorConfig> {
         match self {
-            DeviceConfig::TestDevice { .. } => true,
-            _ => false,
+            DeviceConfig::TestDevice { meta } => Some(TestReactorConfig { meta: meta.clone() }),
+            _ => None,
         }
     }
 
-    /// Convert this device config into a test device config.
-    pub fn to_test_device(self) -> Option<TestReactorConfig> {
+    pub fn to_network_device(&self) -> Option<NetworkReactorConfig> {
         match self {
-            DeviceConfig::TestDevice {
-                id,
-                name,
-                description,
-            } => Some(TestReactorConfig {
-                id,
-                name,
-                description,
+            DeviceConfig::NetworkDevice {
+                meta,
+                port,
+                address,
+            } => Some(NetworkReactorConfig {
+                meta: meta.clone(),
+                port: *port,
+                address: address.as_ref().cloned().unwrap_or(Ipv4Addr::LOCALHOST),
             }),
             _ => None,
         }

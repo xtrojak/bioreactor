@@ -1,3 +1,4 @@
+use crate::api_auth::ApiToken;
 use crate::device::DeviceStatus;
 use crate::{BioreactorDevice, DeviceDepot, ErrorMessage};
 use rocket::http::Status;
@@ -5,7 +6,6 @@ use rocket::response::status::{Custom, NotFound};
 use rocket::serde::json::Json;
 use rocket::{Build, Rocket, State};
 use serde::{Deserialize, Serialize};
-use crate::api_auth::ApiToken;
 
 pub fn register(rocket: Rocket<Build>) -> Rocket<Build> {
     rocket.mount("/", routes![device_list, device_info, device_update])
@@ -30,6 +30,7 @@ struct DeviceInfo {
     description: Option<String>,
     current_status: DeviceStatus,
     target_status: DeviceStatus,
+    current_status_extra: Option<String>,
 }
 
 impl DeviceInfo {
@@ -40,6 +41,7 @@ impl DeviceInfo {
             description: device.get_description(),
             current_status: device.get_current_status(),
             target_status: device.get_target_status(),
+            current_status_extra: device.get_current_status_extra(),
         }
     }
 }
@@ -53,7 +55,7 @@ struct DeviceInfoUpdate {
 async fn device_info(
     device_id: &str,
     depot: &State<DeviceDepot>,
-    _token: ApiToken
+    _token: ApiToken,
 ) -> Result<Json<DeviceInfo>, NotFound<Json<ErrorMessage>>> {
     if let Some(device) = depot.get_device(device_id).await {
         Ok(Json::from(DeviceInfo::from_device(&device)))
@@ -68,7 +70,7 @@ async fn device_update(
     device_id: &str,
     update: Json<DeviceInfoUpdate>,
     depot: &State<DeviceDepot>,
-    _token: ApiToken
+    _token: ApiToken,
 ) -> Result<Json<DeviceInfo>, Custom<Json<ErrorMessage>>> {
     if let Some(mut device) = depot.get_device_mut(device_id).await {
         let update = update.into_inner();

@@ -3,6 +3,7 @@ extern crate rocket;
 
 use crate::config::HubConfig;
 use crate::device::{BioreactorDevice, DeviceDepot};
+use crate::network_bioreactor::NetworkReactor;
 use crate::test_bioreactor::TestReactor;
 use rocket::serde::json::Json;
 use rocket::State;
@@ -30,6 +31,14 @@ mod device;
 /// Defines a "virtual" bioreactor device that can be used for testing.
 mod test_bioreactor;
 
+/// Defines a network device that uses a low-level protocol to connect to a real
+/// (or a simulated) bioreactor device.
+///
+/// For now, each such device operates on a separate port. Later, we may re-architect
+/// this to allow a shared `TcpListener` across devices, but for now it is not really
+/// useful.
+mod network_bioreactor;
+
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     // Load configuration from the first program argument.
@@ -51,10 +60,11 @@ async fn main() -> Result<(), rocket::Error> {
     let mut devices: Vec<BioreactorDevice> = Vec::new();
 
     for device in config.device_config.clone() {
-        if device.is_test_device() {
-            devices.push(Box::new(TestReactor::from_config(
-                device.to_test_device().unwrap(),
-            )));
+        if let Some(config) = device.to_test_device() {
+            devices.push(Box::new(TestReactor::from_config(config)));
+        }
+        if let Some(config) = device.to_network_device() {
+            devices.push(Box::new(NetworkReactor::from_config(config)));
         }
     }
 

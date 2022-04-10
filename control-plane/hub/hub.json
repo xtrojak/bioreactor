@@ -6,15 +6,29 @@
   "device_config": [
     {
       "type": "test_device",
-      "id": "test-device-1",
-      "name": "Bioreactor (1)",
-      "description": "Virtual bioreactor for testing."
+      "meta": {
+        "id": "test-device-1",
+        "name": "Bioreactor (1)",
+        "description": "Virtual bioreactor for testing."
+      }
     },
     {
       "type": "test_device",
-      "id": "test-device-2",
-      "name": "Bioreactor (2)",
-      "description": "Second virtual bioreactor for testing."
+      "meta": {
+        "id": "test-device-2",
+        "name": "Bioreactor (2)",
+        "description": "Second virtual bioreactor for testing."
+      }
+    },
+    {
+      "type": "network_device",
+      "meta": {
+        "id": "network-1",
+        "name": "Network (1)",
+        "description": "A bioreactor connected over the network."
+      },
+      "port": 1234,
+      "address": "127.0.0.1"
     }
   ]
 }
