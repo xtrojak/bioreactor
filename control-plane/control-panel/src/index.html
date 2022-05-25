@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="./index.scss" />
+    <script type="module" src="./index.ts"></script>
+    
+    <title>Bioreactor Control Panel</title>
+  </head>
+  <body>
+    <div class="container-xxl my-3">
+      <div class="row g-2">
+        <div class="col-sm-3">
+          <div class="card bg-dark text-light text-center p-3">
+            <h1 id="hub-name">Hub X</h1>
+            <p id="hub-description">
+              A place to put a longer hub description.
+            </p>
+            <button type="button" class="btn btn-light">
+              Pick hub
+              <span class="icon-inline account-box-multiple"></span>  
+            </button>
+          </div>
+          <div id="hub-devices" class="list-group bg-dark text-light mt-2">
+            <a href="#" class="list-group-item list-group-item-action" aria-current="true">
+              The current link item
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">A second link item</a>
+            <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+          </div>
+        </div>
+        <div class="col-sm-9">
+          <div class="card bg-light">
+            Col - 2
+          </div>
+        </div>
+      </div>
+    </div>
+    <include src="./ui-components/login-modal/login-modal.html"></include>
+  </body>
+</html>

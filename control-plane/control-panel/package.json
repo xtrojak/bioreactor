@@ -1,22 +1,32 @@
 {
   "name": "control-panel",
-  "version": "0.0.1",
-  "description": "Control panel application with bioreactor controls.",
-  "main": "index.js",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "A simple web application for managment of a bioreactor fleet.",
+  "source": "src/index.html",
+  "types": "dist/index.d.ts",
+  "private": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel",
+    "build": "parcel build",
+    "lint": "eslint",
+    "check": "tsc --noEmit"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "^17.0.35",
-    "@types/webpack": "^5.28.0",
-    "clean-webpack-plugin": "^4.0.0",
-    "copy-webpack-plugin": "^11.0.0",
-    "declaration-bundler-webpack-plugin": "^1.0.3",
-    "ts-loader": "^9.3.0",
-    "typescript": "^4.7.2",
-    "webpack": "^5.72.1",
-    "wepack-cli": "^0.0.1-security"
+    "@parcel/transformer-sass": "^2.5.0",
+    "@tsconfig/strictest": "^1.0.1",
+    "@types/bootstrap": "^5.1.12",
+    "parcel": "^2.5.0",
+    "postcss": "^8.4.14",
+    "posthtml-doctype": "^1.1.1",
+    "posthtml-include": "^1.7.4",
+    "sass": "^1.52.1",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "popper.js": "^1.16.1"
   }
 }

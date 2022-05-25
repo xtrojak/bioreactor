@@ -9,6 +9,7 @@ use rocket::serde::json::Json;
 use rocket::State;
 use serde::Serialize;
 use std::process::exit;
+use rocket_cors::CorsOptions;
 
 /// Module where all authentication code resides. In particular, it defines `/login` and `/renew`
 /// endpoints. It also provides `ApiToken` request guard that can be used to enforce authentication
@@ -74,6 +75,7 @@ async fn main() -> Result<(), rocket::Error> {
     // Add configuration data and other state.
     rocket = rocket.manage(config);
     rocket = rocket.manage(device_depot);
+    rocket = rocket.attach(CorsOptions::default().to_cors().unwrap());
     // Mount "server info" root endpoint.
     rocket = rocket.mount("/", routes![index]);
     // Mount other endpoints.

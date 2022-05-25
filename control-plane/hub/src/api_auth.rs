@@ -14,7 +14,7 @@ const DURATION_MONTH: Duration = Duration::from_secs(30 * 24 * 60 * 60);
 
 /// Register API endpoints responsible for authentication.
 pub fn register(rocket: Rocket<Build>) -> Rocket<Build> {
-    rocket.mount("/", routes![login, renew])
+    rocket.mount("/", routes![login, renew, login_cors])
 }
 
 /// Cryptographic proof of authorization that is passed (`base64` encoded) in a HTTP header.
@@ -37,6 +37,7 @@ struct FreshToken {
     expires: DateTime<Utc>,
 }
 
+/// Login endpoint that converts a valid password to a valid access token.
 #[post("/login", format = "json", data = "<credentials>")]
 fn login(
     credentials: Json<Credentials>,
@@ -55,6 +56,15 @@ fn login(
     }
 }
 
+#[options("/login")]
+fn login_cors() {
+    // TODO: We should resolve this in a more universal way.
+}
+
+/// Renew a still valid token with a new one with longer expiration date.
+///
+/// Note that the `_token` argument is only used as a request guard to ensure authentication
+/// and the token itself is not necessary to generate the new token.
 #[get("/renew", format = "json")]
 fn renew(config: &State<HubConfig>, _token: ApiToken) -> Json<FreshToken> {
     let token = ApiToken::new(config.server_password.as_str(), DURATION_MONTH);

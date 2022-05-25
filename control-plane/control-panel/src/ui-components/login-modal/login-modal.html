@@ -1,0 +1,59 @@
+<!--
+  Login modal is used to select a bioreactor hub to which we want to connect.
+
+  It has a normal login form with address and password, plus a dynamic list of 
+  previous connections that can be resumed.
+-->
+<div id="login-modal" class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Pick Bioreactor Hub</h5>
+        </div>
+        <div class="modal-body">
+          <p>Welcome to bioreactor hub control panel. Please connect to a running hub server using the form below:</p>
+          <!-- Login form -->
+          <form id="login-form">
+            <div class="mb-3">
+              <label for="hub-address" class="form-label">Hub address</label>
+              <input type="url" class="form-control" id="hub-address" aria-describedby="address-help">
+              <div id="address-help" class="form-text">A typical hub address has the format <code>https://IP_ADDRESS:PORT</code>.</div>
+            </div>
+            <div class="mb-3">
+              <label for="hub-password" class="form-label">Hub password</label>
+              <input type="password" class="form-control" id="hub-password" aria-describedby="password-help">
+              <div id="password-help" class="form-text">Hub's administrator should provide you with an access password.</div>
+            </div>
+            <div class="form-check float-end mt-2">
+              <label class="form-check-label" for="hub-remember">Remember login</label>
+              <input type="checkbox" class="form-check-input" id="hub-remember" checked>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <!-- Plase where error is displayed. -->
+          <div class="d-none fs-6 text-danger mt-3 mx-auto text-center w-75" id="login-form-error"></div>
+        </div>
+        <!-- List of buttons for existing hubs. -->
+        <div class="modal-footer justify-content-center">
+          <p>Alternatively, pick from the list of saved hubs servers:</p>
+        </div>
+        <!-- Template used to generate buttons for existing hosts. -->
+        <div id="template-host-button" class="d-none flex-row w-75 position-relative">
+          <div class="btn btn-submit btn-outline-dark p-2 w-100">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+              <path d="M6,2C4.89,2 4,2.89 4,4V12C4,13.11 4.89,14 6,14H18C19.11,14 20,13.11 20,12V4C20,2.89 19.11,2 18,2H6M6,4H18V12H6V4M4,15C2.89,15 2,15.89 2,17V20C2,21.11 2.89,22 4,22H20C21.11,22 22,21.11 22,20V17C22,15.89 21.11,15 20,15H4M8,17H20V20H8V17M9,17.75V19.25H13V17.75H9M15,17.75V19.25H19V17.75H15Z" />
+            </svg>
+            <span class="fs-6 hub-address">http://localhost:8000</span>
+          </div>  
+          <span class="position-absolute start-100 top-50 translate-middle btn btn-icon-danger btn-delete">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="28" height="28" viewBox="0 0 28 28">
+              <circle cx="14" cy="14" r="14" fill="white"/>
+              <g transform="translate(2,2)">
+                <path d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2C6.47,2 2,6.47 2,12C2,17.53 6.47,22 12,22C17.53,22 22,17.53 22,12C22,6.47 17.53,2 12,2M14.59,8L12,10.59L9.41,8L8,9.41L10.59,12L8,14.59L9.41,16L12,13.41L14.59,16L16,14.59L13.41,12L16,9.41L14.59,8Z" />              
+              </g>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>    

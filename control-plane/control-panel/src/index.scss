@@ -1,0 +1,32 @@
+@import "./bootstrap-theme.scss";
+@import "~bootstrap/scss/bootstrap";
+
+.icon-inline {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    position: relative;
+    top: 0.2rem;
+}
+
+.icon-inline.account-box-multiple {
+    background-image: url("./icons/account-box-multiple.svg");
+    background-size: contain;  
+}
+
+.btn-outline-dark {
+    fill: $dark;
+    transition: fill 0.15s ease-in-out, 
+                color .15s ease-in-out, 
+                background-color .15s ease-in-out, 
+                border-color .15s ease-in-out, 
+                box-shadow .15s ease-in-out;
+}
+
+.btn-outline-dark:hover {
+    fill: $light;
+}
+
+.btn-icon-danger {
+    fill: $danger;
+}
